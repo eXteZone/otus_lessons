@@ -19,6 +19,18 @@ zfs set compress = lz4 pool/fs
 
 #### Определение алгоритма с наилучшим сжатием
 
+Создаем zfs pool в режиме raidz2:
+```
+zpool create hybrid raidz2 sdb sdc sdd sde sdf sdg
+```
+Создаем файловые системы:
+```
+zfs create hybrid/data1
+zfs create hybrid/data2
+zfs create hybrid/data3
+zfs create hybrid/data4
+zfs create hybrid/data5
+```
 Устанавливаем алгоритмы сжатия на созданные файловые системы:
 
 `zfs set compression=gzip hybrid/data1`
