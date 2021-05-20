@@ -73,10 +73,11 @@ otus/hometask2  1.88M   350M     1.88M  /otus/hometask2
 Определяем параметры пула
 ```
 zfs get all otus
+zpool get all otus
 ```
 ##### размер хранилища
 ```
-350M
+480M
 ```
 ##### тип pool
 ```
