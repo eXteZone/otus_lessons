@@ -94,3 +94,11 @@ zle
 ```
 sha256
 ```
+### Найти сообщение от преподавателей
+Загружаем архив и копируем его в ВМ 
+https://drive.google.com/file/d/1gH8gCL9y7Nd5Ti3IRmplZPF1XjzxeRAG/view?usp=sharing
+
+Восстанавливаем из загруженного снэпшота
+```
+zfs receive hybrid/data1 -F  < otus_task2.file
+```
