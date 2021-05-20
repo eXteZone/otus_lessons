@@ -103,6 +103,6 @@ https://drive.google.com/file/d/1gH8gCL9y7Nd5Ti3IRmplZPF1XjzxeRAG/view?usp=shari
 ```
 zfs receive hybrid/data1 -F  < otus_task2.file
 ```
-Переходим в восстановленную ФС и находим директорию /file_mess, а в ней secret_message c содержимым 
+Переходим в восстановленную ФС и находим директорию /task1/file_mess, а в ней secret_message c содержимым 
 https://github.com/sindresorhus/awesome
 
