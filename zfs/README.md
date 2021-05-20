@@ -66,4 +66,35 @@ https://drive.google.com/open?id=1KRBNW33QWqbvbVHa3hLJivOAt60yukkg
 vagrant plugin install vagrant-scp
 vagrant scp zpoolexport server:/home/vagrant
 ```
+Собираем пул из распакованного архива
+```
 zpool import -d ${PWD}/zpoolexport/ otus
+```
+```
+otus            2.04M   350M       24K  /otus
+otus/hometask2  1.88M   350M     1.88M  /otus/hometask2
+```
+Определяем параметры пула
+```
+zfs get all otus
+```
+##### размер хранилища
+```
+350M
+```
+##### тип pool
+```
+filesystem
+```
+##### значение recordsize
+```
+128K
+```
+##### какое сжатие используется
+```
+zle
+```
+##### какая контрольная сумма используется
+```
+sha256
+```
