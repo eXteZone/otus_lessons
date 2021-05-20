@@ -1,4 +1,4 @@
-## Сжатие файловых систем ZFS
+### Сжатие файловых систем ZFS
 
 Сжатие - это процесс хранения данных с использованием меньшего дискового пространства. Доступны следующие алгоритмы сжатия:
 
@@ -58,5 +58,12 @@ hybrid/data5  compressratio  2.49x     -
 Очевидно, что gzip-9 справился с этой задачей лучше всех.
 
  
-
-
+ 
+### Определяем настройки pool’a
+Загружаем архив и копируем его в ВМ
+https://drive.google.com/open?id=1KRBNW33QWqbvbVHa3hLJivOAt60yukkg
+```
+vagrant plugin install vagrant-scp
+vagrant scp zpoolexport server:/home/vagrant
+```
+zpool import -d ${PWD}/zpoolexport/ otus
