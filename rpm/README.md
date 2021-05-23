@@ -1,4 +1,5 @@
-###
+### Как создать свой RPM пакет и репозиторий
+```
 [root@packages ~]# yum install -y \
 redhat-lsb-core \
 wget \
@@ -6,9 +7,7 @@ rpmdevtools \
 rpm-build \
 createrepo \
 yum-utils
-
-Создать свой RPM пакет
-
+```
 ● Для примера возьмем пакет NGINX и соберем его с поддержкой openssl
 
 ● Загрузим SRPM пакет NGINX для дальнейшей работы над ним:
@@ -17,13 +16,14 @@ yum-utils
 ```
 
 ● При установке такого пакета в домашней директории создается древо каталогов для сборки:
+```
 [root@packages ~]# rpm -i nginx-1.14.1-1.el7_4.ngx.src.rpm
-
+```
 ● Также нужно скачать и разархивировать последние исходники для openssl - он потребуется при сборке
+```
 [root@packages ~]# wget https://www.openssl.org/source/latest.tar.gz
-
 [root@packages ~]# tar -xvf latest.tar.gz
-
+```
 ● Заранее поставим все зависимости чтобы в процессе сборки не было ошибок
 ```
 [root@packages ~]# yum-builddep rpmbuild/SPECS/nginx.spec
@@ -48,9 +48,11 @@ Executing(%clean): /bin/sh -e /var/tmp/rpm-tmp.XodhnN
 + exit 0
 ```
 ● Убедимся что пакеты создались:
+```
 [root@packages ~]# ll rpmbuild/RPMS/x86_64/
 -rw-r--r--. 1 root root 1999864 Nov 29 06:15 nginx-1.14.1-1.el7_4.ngx.x86_64.rpm
 -rw-r--r--. 1 root root 2488840 Nov 29 06:15 nginx-debuginfo-1.14.1-1.el7_4.ngx.x86_64.rpm
+```
 ● Теперþ можно установитþ наш пакет и убедитþсā что nginx работает
 [root@packages ~]# yum localinstall -y \
 rpmbuild/RPMS/x86_64/nginx-1.14.1-1.el7_4.ngx.x86_64.rpm
