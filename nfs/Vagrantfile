@@ -1,0 +1,59 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+# up server
+dir = Dir.pwd
+vagrant_dir = File.expand_path(File.dirname(__FILE__))
+
+Vagrant.configure(2) do |config|
+config.vbguest.auto_update = false
+config.vm.box_check_update = false
+box_name = "eXteZone/centos7-5x"
+vm = {
+
+        'nfs-server' => {
+            :name => 'nfs-server',
+            :ip => '192.168.89.99',
+            :box => box_name
+        },
+
+        'nfs-client' => {
+            :name => 'nfs-client',
+            :ip => '192.168.89.100',
+            :box => box_name
+        }
+    }
+
+	vm.each do |key,value|
+
+    boxname = value[:name]
+    config.vm.provision :shell, inline: 'echo boxname: ' + boxname
+
+    config.vm.define boxname do |vm_config|
+
+        vm_config.vm.provision "shell", inline: "echo !!!thisname!!!! #{key}"
+        vm_config.vm.provision "shell", inline: "echo !!!thisip!!!! #{value[:ip]}"
+
+        vm_config.vm.box = value[:box]
+        vm_config.vm.host_name = "%s.vagrant" % value[:name]
+
+        vm_config.vm.network "private_network", ip: value[:ip]
+
+
+        provision_filename = key.to_s + "-provision.sh"
+        vm_config.vm.provision "shell", inline: "echo #{provision_filename}"
+
+        # provisioning
+        if File.exists?(File.join(vagrant_dir,'provision',boxname + "-provision.sh")) then
+            vm_config.vm.provision "shell", inline: "echo +++exists+++"
+            vm_config.vm.provision :shell, :path => File.join( "provision", boxname + "-provision.sh" )
+        else
+            vm_config.vm.provision "shell", inline: "echo PROVISION FILE DOES NOT EXIST!"
+        end
+
+        # Shared folder
+        vm_config.vm.synced_folder ".", "/vagrant", disabled: true
+
+    end # config.vm.define opts[:name] do |config|
+
+end
+end
