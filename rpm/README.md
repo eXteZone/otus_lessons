@@ -1,3 +1,4 @@
+###
 [root@packages ~]# yum install -y \
 redhat-lsb-core \
 wget \
@@ -5,23 +6,38 @@ rpmdevtools \
 rpm-build \
 createrepo \
 yum-utils
+
 Создать свой RPM пакет
+
 ● Для примера возьмем пакет NGINX и соберем его с поддержкой openssl
+
 ● Загрузим SRPM пакет NGINX для дальнейшей работы над ним:
+```
 [root@packages ~]# wget https://nginx.org/packages/centos/7/SRPMS/nginx-1.14.1-1.el7_4.ngx.src.rpm
+```
+
 ● При установке такого пакета в домашней директории создается древо каталогов для сборки:
 [root@packages ~]# rpm -i nginx-1.14.1-1.el7_4.ngx.src.rpm
+
 ● Также нужно скачать и разархивировать последние исходники для openssl - он потребуется при сборке
 [root@packages ~]# wget https://www.openssl.org/source/latest.tar.gz
+
 [root@packages ~]# tar -xvf latest.tar.gz
+
 ● Заранее поставим все зависимости чтобы в процессе сборки не было ошибок
+```
 [root@packages ~]# yum-builddep rpmbuild/SPECS/nginx.spec
+```
 ● Ну и собственно поправить сам spec файл чтобы NGINX собирался с необходимыми нам опциями:
+
 ○ Результирующий spec файл получился таким
 ○ Обратите внимание что путь до openssl указываем ДО каталога:
 --with-openssl=/root/openssl-1.1.1a
+
 ● По этой ссылке можно посмотреть все доступные опции для сборки.
+
 ● Теперь можно приступить к сборке RPM пакета:
+```
 [root@packages ~]# rpmbuild -bb rpmbuild/SPECS/nginx.spec
 ...
 Executing(%clean): /bin/sh -e /var/tmp/rpm-tmp.XodhnN
@@ -30,6 +46,7 @@ Executing(%clean): /bin/sh -e /var/tmp/rpm-tmp.XodhnN
 + cd nginx-1.14.1
 + /usr/bin/rm -rf /root/rpmbuild/BUILDROOT/nginx-1.14.1-1.el7_4.ngx.x86_64
 + exit 0
+```
 ● Убедимся что пакеты создались:
 [root@packages ~]# ll rpmbuild/RPMS/x86_64/
 -rw-r--r--. 1 root root 1999864 Nov 29 06:15 nginx-1.14.1-1.el7_4.ngx.x86_64.rpm
