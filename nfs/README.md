@@ -4,6 +4,7 @@ vagrant up поднимает две ВМ:
 - nfs-server
 - nfs-client
 и выполняет скрипты provision:
+
 nfs-server-provision.sh
 ```
 sudo yum install nfs-utils nfs-utils-lib -y
