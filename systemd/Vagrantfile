@@ -2,7 +2,7 @@
 # vim: set ft=ruby :
 MACHINES = {
   :systemd => {
-        :box_name => "centos/7",
+        :box_name => "eXteZone/centos7vbg",
         :ip_addr => '192.168.11.101'
   }
 }
@@ -19,12 +19,9 @@ Vagrant.configure("2") do |config|
 	  box.vm.synced_folder ".", "/vagrant"
           
           box.vm.provision "shell", inline: <<-SHELL
-            mkdir -p ~root/.ssh; cp ~vagrant/.ssh/auth* ~root/.ssh
-            sudo yum install vim -y
           SHELL
-          box.vm.provision "watchlog", type: "shell", path: "./scripts/watchlogprov.sh"
-          box.vm.provision "httpdprov", type: "shell", path: "./scripts/httpdprov.sh"
-          box.vm.provision "jiraprov", type: "shell", path: "./scripts/jiraprov.sh"
+          box.vm.provision "watchlog", type: "shell", path: "./scripts/watchlog-config.sh"
+          box.vm.provision "httpd", type: "shell", path: "./scripts/httpd-config.sh"
       end
    end
 end
